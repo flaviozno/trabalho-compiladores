@@ -17,7 +17,7 @@ class Estado:
 
 def tabela():
     tabela_transicao = [
-        Estado(nome=1, transicoes=[("c", 2), ("d", 3)]),
+        Estado(nome=1, transicoes=[("cb", 2), ("d", 3)]),
         Estado(nome=2, transicoes=[("c", 3)]),
         Estado(nome=3, transicoes=[("c", 4)]),
         Estado(nome=4, transicoes=[("c", 5)]),

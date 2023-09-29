@@ -6,8 +6,11 @@ from reader import read
 def lex(nome_arquivo):
     table = tabela()
     estado = 1
+    lexema = ""
     for char in read(nome_arquivo):
-        print(f"Estado = {estado}, char {char}")
+        lexema = lexema + char["char"]
+
+        print(f"Estado = {estado}, char = {char}, lexema = {lexema}")
 
         found_transition = False
 
@@ -24,7 +27,9 @@ def lex(nome_arquivo):
             break
 
         if table[estado].final:
-            print("reconheci")
+            print(f"reconheci lexema = {lexema} ")
+            lexema = ""
+            estado = 1
 
 
 lex("teste.txt")
