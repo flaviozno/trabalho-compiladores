@@ -21,11 +21,14 @@ def lex(nome_arquivo):
 
         if table[estado].final:
             yield lexema
-            estado = 1
             lexema = ""
-            lexema, estado, found_transition = transiciona_estado(
-                table, char, estado, lexema
-            )
+            if table[estado].look_forward:
+                estado = 1
+                lexema, estado, found_transition = transiciona_estado(
+                    table, char, estado, lexema
+                )
+            else:
+                estado = 1
 
 
 def transiciona_estado(table, char, estado, lexema):
