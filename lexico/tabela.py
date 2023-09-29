@@ -1,8 +1,9 @@
 class Estado:
-    def __init__(self, nome, final=False, transicoes=[]):
+    def __init__(self, nome, final=False, transicoes=[], look_forward=False):
         self.nome = nome
         self.final = final
         self.transicoes = transicoes
+        self.look_forward = look_forward
 
     def adicionar_transicao(self, caractere, proximo_estado):
         self.transicoes.append((caractere, proximo_estado))
@@ -22,7 +23,7 @@ def tabela():
         Estado(nome=3, transicoes=[("c", 4)]),
         Estado(nome=4, transicoes=[("c", 5)]),
         Estado(nome=5, transicoes=[("c", 1), ("d", 6)]),
-        Estado(nome=6, final=True, transicoes=[("c", 5)]),
+        Estado(nome=6, final=True, transicoes=[("c", 5)], look_forward=True),
     ]
 
     return valida_tabela(tabela_transicao)

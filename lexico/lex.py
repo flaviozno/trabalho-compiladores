@@ -8,28 +8,39 @@ def lex(nome_arquivo):
     estado = 1
     lexema = ""
     for char in read(nome_arquivo):
-        lexema = lexema + char["char"]
-
-        print(f"Estado = {estado}, char = {char}, lexema = {lexema}")
-
-        found_transition = False
-
-        for trans in table[estado].transicoes:
-            if char["char"] in trans[0]:
-                estado = trans[1]
-                found_transition = True
+        lexema, estado, found_transition = transiciona_estado(
+            table, char, estado, lexema
+        )
 
         if not found_transition:
             estado = -1
 
         if estado == -1:
-            print(f"Erro no char {char}")
+            print(f"Erro no char {char} no lexema = {lexema}")
             break
 
         if table[estado].final:
-            print(f"reconheci lexema = {lexema} ")
-            lexema = ""
+            yield lexema
             estado = 1
+            lexema = ""
+            lexema, estado, found_transition = transiciona_estado(
+                table, char, estado, lexema
+            )
 
 
-lex("teste.txt")
+def transiciona_estado(table, char, estado, lexema):
+    lexema = lexema + char["char"]
+    # print(f"Estado = {estado}, char = {char}, lexema = {lexema}")
+
+    found_transition = False
+
+    for trans in table[estado].transicoes:
+        if char["char"] in trans[0]:
+            estado = trans[1]
+            found_transition = True
+
+    return lexema, estado, found_transition
+
+
+for lexema in lex("teste.txt"):
+    print(lexema)
