@@ -17,14 +17,110 @@ class Estado:
 
 
 def tabela():
+    ascii_characters = "".join(chr(i) for i in range(32, 127))
+    letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
+    numeros = "0123456789"
+
     tabela_transicao = [
         Estado(nome=0, transicoes=[("cb", 2), ("d", 3)]),
-        Estado(nome=1, transicoes=[("cb", 2), ("d", 3)]),
-        Estado(nome=2, transicoes=[("c", 3)]),
-        Estado(nome=3, transicoes=[("c", 4)]),
-        Estado(nome=4, transicoes=[("c", 5)]),
-        Estado(nome=5, transicoes=[("c", 1), ("d", 6)]),
-        Estado(nome=6, final=True, look_forward=True),
+        Estado(nome=1, final=True),
+        Estado(nome=2, transicoes=[("}", 3), (ascii_characters, 2)]),
+        Estado(nome=3, final=True),
+        Estado(
+            nome=4,
+            transicoes=[
+                (letras + numeros, 4),
+                (
+                    "".join(
+                        char
+                        for char in ascii_characters
+                        if char not in (letras + numeros)
+                    ),
+                    5,
+                ),
+            ],
+        ),
+        Estado(nome=5, final=True, look_forward=True),
+        Estado(
+            nome=6,
+            transicoes=[
+                (numeros, 6),
+                (".", 8),
+                (
+                    "".join(
+                        char for char in ascii_characters if char not in (numeros + ".")
+                    ),
+                    7,
+                ),
+            ],
+        ),
+        Estado(nome=7, final=True, look_forward=True),
+        Estado(nome=8, transicoes=[(numeros, 9)]),
+        Estado(
+            nome=9,
+            transicoes=[
+                (numeros, 9),
+                ("E", 10),
+                (
+                    "".join(
+                        char for char in ascii_characters if char not in (numeros + "E")
+                    ),
+                    14,
+                ),
+            ],
+        ),
+        Estado(nome=10, transicoes=[("-", 11), (numeros, 12)]),
+        Estado(nome=11, transicoes=[(numeros, 12)]),
+        Estado(
+            nome=12,
+            transicoes=[
+                (numeros, 12),
+                ("".join(char for char in ascii_characters if char not in numeros), 13),
+            ],
+        ),
+        Estado(nome=13, final=True, look_forward=True),
+        Estado(nome=14, final=True, look_forward=True),
+        Estado(nome=15, transicoes=[(".", 15), ("'", 16)]),
+        Estado(nome=16, final=True),
+        Estado(
+            nome=17,
+            transicoes=[
+                ("=", 19),
+                ("".join(char for char in ascii_characters if char not in "="), 18),
+            ],
+        ),
+        Estado(nome=18, final=True, look_forward=True),
+        Estado(nome=19, final=True),
+        Estado(nome=20, final=True),
+        Estado(nome=21, final=True),
+        Estado(nome=22, final=True),
+        Estado(
+            nome=23,
+            transicoes=[
+                ("=", 24),
+                ("".join(char for char in ascii_characters if char not in ">="), 25),
+            ],
+        ),
+        Estado(nome=24, final=True),
+        Estado(nome=25, final=True, look_forward=True),
+        Estado(
+            nome=26,
+            transicoes=[
+                ("=", 27),
+                ("".join(char for char in ascii_characters if char not in "="), 28),
+            ],
+        ),
+        Estado(nome=27, final=True),
+        Estado(nome=28, final=True, look_forward=True),
+        Estado(nome=29, transicoes=[("=", 30)]),
+        Estado(nome=30, final=True),
+        Estado(nome=31, final=True),
+        Estado(nome=32, final=True),
+        Estado(nome=33, final=True),
+        Estado(nome=34, final=True),
+        Estado(nome=35, final=True),
+        Estado(nome=36, final=True),
+        Estado(nome=37, final=True),
     ]
 
     return valida_tabela(tabela_transicao)
