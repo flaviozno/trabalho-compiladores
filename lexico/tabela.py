@@ -18,12 +18,13 @@ class Estado:
 
 def tabela():
     tabela_transicao = [
+        Estado(nome=0, transicoes=[("cb", 2), ("d", 3)]),
         Estado(nome=1, transicoes=[("cb", 2), ("d", 3)]),
         Estado(nome=2, transicoes=[("c", 3)]),
         Estado(nome=3, transicoes=[("c", 4)]),
         Estado(nome=4, transicoes=[("c", 5)]),
         Estado(nome=5, transicoes=[("c", 1), ("d", 6)]),
-        Estado(nome=6, final=True, transicoes=[("c", 5)], look_forward=True),
+        Estado(nome=6, final=True, look_forward=True),
     ]
 
     return valida_tabela(tabela_transicao)

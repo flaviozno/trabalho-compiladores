@@ -5,7 +5,7 @@ from reader import read
 
 def lex(nome_arquivo):
     table = tabela()
-    estado = 1
+    estado = 0
     lexema = ""
     for char in read(nome_arquivo):
         lexema, estado, found_transition = transiciona_estado(
@@ -20,15 +20,17 @@ def lex(nome_arquivo):
             break
 
         if table[estado].final:
-            yield lexema
-            lexema = ""
             if table[estado].look_forward:
-                estado = 1
+                yield lexema[:-1]
+                lexema = ""
+                estado = 0
                 lexema, estado, found_transition = transiciona_estado(
                     table, char, estado, lexema
                 )
             else:
-                estado = 1
+                yield lexema
+                lexema = ""
+                estado = 0
 
 
 def transiciona_estado(table, char, estado, lexema):
