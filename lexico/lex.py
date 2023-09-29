@@ -1,25 +1,30 @@
 from tabela import tabela
 
-
-def palavra():
-    yield "c"
-    yield "c"
-    yield "c"
-    yield "c"
-    yield "d"
+from reader import read
 
 
-table = tabela()
-estado = 1
+def lex(nome_arquivo):
+    table = tabela()
+    estado = 1
+    for char in read(nome_arquivo):
+        print(f"Estado = {estado}, char {char}")
 
-for char in palavra():
-    print(f"Estado = {estado}, char {char}")
-    if estado == -1:
-        print(f"Erro no char {char}")
-        break
-    for trans in table[estado].transicoes:
-        if char in trans[0]:
-            estado = trans[1]
+        found_transition = False
 
-    if table[estado].final:
-        print("reconheci")
+        for trans in table[estado].transicoes:
+            if char["char"] in trans[0]:
+                estado = trans[1]
+                found_transition = True
+
+        if not found_transition:
+            estado = -1
+
+        if estado == -1:
+            print(f"Erro no char {char}")
+            break
+
+        if table[estado].final:
+            print("reconheci")
+
+
+lex("teste.txt")
