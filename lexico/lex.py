@@ -1,7 +1,7 @@
-from tabela import tabela
-from tabela import Token_type
+from lexico.tabela import tabela
+from lexico.tabela import Token_type
 
-from reader import read
+from lexico.reader import read
 
 
 def lex(nome_arquivo):
@@ -65,7 +65,3 @@ def filtered_lex(nome_arquivo):
     for lexema in lex(nome_arquivo):
         if not lexema[1] == Token_type.WS:
             yield lexema
-
-
-for lexema in filtered_lex("teste.txt"):
-    print(lexema)
