@@ -22,7 +22,8 @@ def tabela():
     numeros = "0123456789"
 
     tabela_transicao = [
-        Estado(nome=0, transicoes=[("cb", 2), ("d", 3)]),
+        Estado(nome=0, transicoes=[
+               ("\\s" or "\\n" or "\\t", 1), ("{", 2), (letras, 4), (numeros, 6), ("'", 15), (":", 17), (";", 20), (",", 21), ("=", 22), ("<", 23), (">", 26), ("!", 29), ("^", 31), ("+", 32), ("-", 33), ("*", 34), ("/", 35), ("(", 36), (")", 37)]),
         Estado(nome=1, final=True),
         Estado(nome=2, transicoes=[("}", 3), (ascii_characters, 2)]),
         Estado(nome=3, final=True),
@@ -135,6 +136,7 @@ def valida_tabela(tabela):
     for k, v in table.items():
         for trans in v.transicoes:
             if trans[1] not in table:
-                raise Exception(f"TRANSIÇÃO INVALIDA EM [{v}] NA TRANSICAO {trans}")
+                raise Exception(
+                    f"TRANSIÇÃO INVALIDA EM [{v}] NA TRANSICAO {trans}")
 
     return table
