@@ -1,5 +1,5 @@
-from lexico.tabela import tabela
-from lexico.tabela import Token_type
+from lexico.tabela_transicao import tabela
+from lexico.tabela_transicao import Token_type
 
 from lexico.reader import read
 
@@ -10,17 +10,24 @@ def lex(nome_arquivo):
     lexema = ""
     leitor = read(nome_arquivo)
 
+    inicio_lexema = (0, 0)
     for char in leitor:
         # print(f"LEU CHAR : {char}")
+
+        if len(lexema) == 0:
+            inicio_lexema = (char["line"], char["column"])
+
         if table[estado].final:
             if table[estado].look_forward:
-                yield (lexema[:-1], table[estado].retorno)
+                yield (lexema[:-1], table[estado].retorno, inicio_lexema)
                 lexema = ""
                 estado = 0
+                inicio_lexema = (char["line"], char["column"])
             else:
-                yield (lexema, table[estado].retorno)
+                yield (lexema, table[estado].retorno, inicio_lexema)
                 lexema = ""
                 estado = 0
+                inicio_lexema = (char["line"], char["column"])
 
         if not table[estado].final:
             lexema, estado, found_transition = transiciona_estado(
@@ -36,16 +43,18 @@ def lex(nome_arquivo):
 
         if table[estado].final:
             if table[estado].look_forward:
-                yield (lexema[:-1], table[estado].retorno)
+                yield (lexema[:-1], table[estado].retorno, inicio_lexema)
                 lexema = ""
                 estado = 0
+                inicio_lexema = (char["line"], char["column"])
                 lexema, estado, found_transition = transiciona_estado(
                     table, char, estado, lexema
                 )
             else:
-                yield (lexema, table[estado].retorno)
+                yield (lexema, table[estado].retorno, inicio_lexema)
                 lexema = ""
                 estado = 0
+                inicio_lexema = (char["line"], char["column"])
 
 
 def transiciona_estado(table, char, estado, lexema):
