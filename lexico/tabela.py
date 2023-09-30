@@ -123,6 +123,7 @@ def tabela():
         Estado(
             nome=9,
             transicoes=[
+                ("\n", 14),
                 (numeros, 9),
                 ("E", 10),
                 (
@@ -153,6 +154,7 @@ def tabela():
         Estado(
             nome=15,
             transicoes=[
+                ("\n", 15),
                 ("'", 16),
                 ("".join(char for char in ascii_characters if char not in "'"), 15),
             ],
@@ -161,6 +163,7 @@ def tabela():
         Estado(
             nome=17,
             transicoes=[
+                ("\n", 18),
                 ("=", 19),
                 ("".join(char for char in ascii_characters if char not in "="), 18),
             ],
@@ -173,15 +176,17 @@ def tabela():
         Estado(
             nome=23,
             transicoes=[
+                ("\n", 25),
                 ("=", 24),
                 ("".join(char for char in ascii_characters if char not in ">="), 25),
             ],
         ),
         Estado(nome=24, final=True, retorno=Token_type.RELOP_LE),
-        Estado(nome=25, final=True, look_forward=True, retorno=Token_type.RELOP_NE),
+        Estado(nome=25, final=True, look_forward=True, retorno=Token_type.RELOP_LT),
         Estado(
             nome=26,
             transicoes=[
+                ("\n", 28),
                 ("=", 27),
                 ("".join(char for char in ascii_characters if char not in "="), 28),
             ],
