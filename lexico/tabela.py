@@ -150,7 +150,13 @@ def tabela():
         ),
         Estado(nome=13, final=True, look_forward=True, retorno=Token_type.NUMERO_EXP),
         Estado(nome=14, final=True, look_forward=True, retorno=Token_type.NUMERO_FLOAT),
-        Estado(nome=15, transicoes=[(".", 15), ("'", 16)]),
+        Estado(
+            nome=15,
+            transicoes=[
+                ("'", 16),
+                ("".join(char for char in ascii_characters if char not in "'"), 15),
+            ],
+        ),
         Estado(nome=16, final=True, retorno=Token_type.CHARS),
         Estado(
             nome=17,

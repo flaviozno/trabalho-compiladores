@@ -1,9 +1,10 @@
-umId := : 0 {asdasd}
-umId := : 0 {asdas
+umId := : 0 {asdasd} {asdas
 
 d}
 <=
 
 1234.0E14
 
-outro_id
+'charsa'
+
+outro_id()
