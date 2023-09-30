@@ -1,6 +1,9 @@
 from lexico.reader import read
 
-ascii_characters = "".join(chr(i) for i in range(32, 127))
-letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
-res = "".join(char for char in ascii_characters if char not in letras)
-print(res)
+my_str = "Olá, mundo!\nComo vai?\n"
+char_to_check = "\n"
+
+if char_to_check in my_str:
+    print(f"'{char_to_check}' encontrado na string.")
+else:
+    print(f"'{char_to_check}' não encontrado na string.")

@@ -10,6 +10,6 @@ def read(nome_arquivo):
                     yield {"char": char, "line": line_count, "column": column_count}
                 column_count = 0
             line_count += 1
-            yield {"char": "/n", "line": line_count, "column": column_count}
+            yield {"char": "\n", "line": line_count, "column": column_count}
     except FileNotFoundError:
         print(f"O arquivo '{nome_arquivo}' não foi encontrado.")

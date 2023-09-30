@@ -1,4 +1,5 @@
 from tabela import tabela
+from tabela import Token_type
 
 from reader import read
 
@@ -7,35 +8,49 @@ def lex(nome_arquivo):
     table = tabela()
     estado = 0
     lexema = ""
-    for char in read(nome_arquivo):
-        lexema, estado, found_transition = transiciona_estado(
-            table, char, estado, lexema
-        )
+    leitor = read(nome_arquivo)
 
-        if not found_transition:
+    for char in leitor:
+        # print(f"LEU CHAR : {char}")
+        if table[estado].final:
+            if table[estado].look_forward:
+                yield (lexema[:-1], table[estado].retorno)
+                lexema = ""
+                estado = 0
+            else:
+                yield (lexema, table[estado].retorno)
+                lexema = ""
+                estado = 0
+
+        if not table[estado].final:
+            lexema, estado, found_transition = transiciona_estado(
+                table, char, estado, lexema
+            )
+
+        if not found_transition and not (table[estado].final):
             estado = -1
 
         if estado == -1:
-            print(f"Erro no char {char} no lexema = {lexema}")
+            print(f'Erro no char {char} no lexema = "{lexema}" len = {len(lexema)}')
             break
 
         if table[estado].final:
             if table[estado].look_forward:
-                yield lexema[:-1]
+                yield (lexema[:-1], table[estado].retorno)
                 lexema = ""
                 estado = 0
                 lexema, estado, found_transition = transiciona_estado(
                     table, char, estado, lexema
                 )
             else:
-                yield lexema
+                yield (lexema, table[estado].retorno)
                 lexema = ""
                 estado = 0
 
 
 def transiciona_estado(table, char, estado, lexema):
     lexema = lexema + char["char"]
-    # print(f"Estado = {estado}, char = {char}, lexema = {lexema}")
+    # print(f'Estado = {estado}, char = {char}, lexema = "{lexema}", len = {len(lexema)}')
 
     found_transition = False
 
@@ -43,9 +58,14 @@ def transiciona_estado(table, char, estado, lexema):
         if char["char"] in trans[0]:
             estado = trans[1]
             found_transition = True
-
     return lexema, estado, found_transition
 
 
-for lexema in lex("teste.txt"):
+def filtered_lex(nome_arquivo):
+    for lexema in lex(nome_arquivo):
+        if not lexema[1] == Token_type.WS:
+            yield lexema
+
+
+for lexema in filtered_lex("teste.txt"):
     print(lexema)
