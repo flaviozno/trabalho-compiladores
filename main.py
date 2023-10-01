@@ -7,5 +7,6 @@ tabela_simbolos = Tabela_simbolos()
 for lexema in filtered_lex("teste.txt", tabela_simbolos):
     print(lexema)
 
-print("----------------------------")
+print("-----------------------------------------")
+print("TABELA DE SÍMBOLOS: ")
 print(f"{tabela_simbolos.listar_todos()}")

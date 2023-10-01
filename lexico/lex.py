@@ -81,9 +81,9 @@ def filtered_lex(nome_arquivo, tabela_simbolo):
 def insere_tabela(lexema, tabela: Tabela_simbolos):
     tipo = lexema[1]
     lex = lexema[0]
-    print(f"TENTANDO BOTAR {lexema}")
+
     if tipo in [Token_type.ID]:
-        print("botei id")
+        print("ID adicionado na tabela de simbolos")
         tabela.inserir(token_tipo=tipo, lexema=lex, tipo_dado="ID", valor=None)
 
     if tipo in [
@@ -92,5 +92,5 @@ def insere_tabela(lexema, tabela: Tabela_simbolos):
         Token_type.NUMERO_FLOAT,
         Token_type.CHARS,
     ]:
-        print("botei NUY")
+        print("Numero adicionado na tabela de simbolos")
         tabela.inserir(token_tipo=tipo, lexema=lex, valor=None, tipo_dado=None)
