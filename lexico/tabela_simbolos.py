@@ -2,6 +2,8 @@ from lexico.tabela_transicao import Token_type
 
 
 class Tabela_simbolos:
+    tabela = {}
+
     def init(self):
         self.tabela = {}
 

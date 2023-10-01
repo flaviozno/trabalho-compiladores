@@ -1,5 +1,6 @@
 from lexico.tabela_transicao import tabela
 from lexico.tabela_transicao import Token_type
+from lexico.tabela_simbolos import Tabela_simbolos
 
 from lexico.reader import read
 
@@ -70,7 +71,26 @@ def transiciona_estado(table, char, estado, lexema):
     return lexema, estado, found_transition
 
 
-def filtered_lex(nome_arquivo):
+def filtered_lex(nome_arquivo, tabela_simbolo):
     for lexema in lex(nome_arquivo):
         if not lexema[1] == Token_type.WS:
+            insere_tabela(lexema=lexema, tabela=tabela_simbolo)
             yield lexema
+
+
+def insere_tabela(lexema, tabela: Tabela_simbolos):
+    tipo = lexema[1]
+    lex = lexema[0]
+    print(f"TENTANDO BOTAR {lexema}")
+    if tipo in [Token_type.ID]:
+        print("botei id")
+        tabela.inserir(token_tipo=tipo, lexema=lex, tipo_dado="ID", valor=None)
+
+    if tipo in [
+        Token_type.NUMERO_INT,
+        Token_type.NUMERO_EXP,
+        Token_type.NUMERO_FLOAT,
+        Token_type.CHARS,
+    ]:
+        print("botei NUY")
+        tabela.inserir(token_tipo=tipo, lexema=lex, valor=None, tipo_dado=None)
