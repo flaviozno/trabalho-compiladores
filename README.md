@@ -1,8 +1,5 @@
 # Trabalho Compiladores
 
-Para ver o vídeo explicando como buildar e rodar o compilador acesse pelo seguinte link:
-[Vídeo explicativo](https://ufubr-my.sharepoint.com/:v:/g/personal/daniel_dias_ufu_br/EfD9dQL1VxNNvxOAHpVTedkB1RmckZcTZimjixsuFJPgwQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0RpcmVjdCJ9fQ&e=rgjlM6) obs.: Precisa estar logado em uma conta do domínio UFU para acessar o vídeo
-
 ### Operating System
 - Windows
 
@@ -30,8 +27,8 @@ Para ver o vídeo explicando como buildar e rodar o compilador acesse pelo segui
 
       pip install -r requirements.txt
 
-## Compilling
-- Compile the virtual environment and activate it by running the following command:
+## Compilling and executing
+- To execute the compiler for the file teste.txt run:
 
-        ./compiler.sh $FILE_NAME
+        python main.py
         
