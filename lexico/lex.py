@@ -39,7 +39,8 @@ def lex(nome_arquivo):
             estado = -1
 
         if estado == -1:
-            print(f'Erro no char {char} no lexema = "{lexema}" len = {len(lexema)}')
+            print(
+                f'Erro no char {char} no lexema = "{lexema}" len = {len(lexema)}')
             break
 
         if table[estado].final:
