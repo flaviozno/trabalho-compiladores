@@ -11,8 +11,7 @@ follow_sets_lexico = find_follow_all(tabela_transicao_lexico)
 
 
 for lexema in filtered_lex("teste.txt", tabela_simbolos):
-    print(lexema)
-
+    pass
 
 print("-----------------------------------------")
 print("TABELA DE SÍMBOLOS: ")

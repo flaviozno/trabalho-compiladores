@@ -2,9 +2,9 @@ from lexico.tabela_transicao import Token_type
 
 
 class Tabela_simbolos:
-    tabela = {}
+    tabela = {}  # dicionário para armazenar informações sobre os símbolos encontrados durante a análise léxica
 
-    def init(self):
+    def __init__(self):
         self.tabela = {}
 
     def inserir(self, token_tipo, lexema, valor, tipo_dado):
@@ -15,8 +15,9 @@ class Tabela_simbolos:
             "tipo_do_dado": tipo_dado,
         }
 
-    def buscar(self, lexema):
+    def buscar(self, lexema):  # recebe o lexema como parâmetro e retorna as informações associadas a esse lexema na tabela de símbolos. Se o lexema não estiver presente, retorna none
         return self.tabela.get(lexema, None)
 
+    # retorna uma lista contendo todas as entradas da tabela de símbolos.
     def listar_todos(self):
         return list(self.tabela.values())

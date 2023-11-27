@@ -20,5 +20,5 @@ um_id_qualquer
 +
 -
 *
-/
-^^
+if
+else

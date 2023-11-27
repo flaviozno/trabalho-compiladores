@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Token_type(Enum):
+class Token_type(Enum): ##define vários tipos de tokens, cada um associado a um valor numérico único.
     WS = 1
     ID = 2
     NUMERO_INT = 3
@@ -25,9 +25,17 @@ class Token_type(Enum):
     ARIOP_EXP = 21
     ABRE_PARENTESES = 22
     FECHA_PARENTESES = 23
+    IF = 24
+    ELSE = 25
+    WHILE = 26
+    FOR = 27
+    INT = 28
+    FLOAT = 29
+    RETURN = 30
+    PROGRAMA = 31
 
 
-class Estado:
+class Estado: ##  uma classe que representa os estados em um autômato finito usado para análise léxica.
     def __init__(
         self, nome, final=False, transicoes=[], look_forward=False, retorno=None
     ):
@@ -37,7 +45,7 @@ class Estado:
         self.look_forward = look_forward
         self.retorno = retorno
 
-    def adicionar_transicao(self, caractere, proximo_estado):
+    def adicionar_transicao(self, caractere, proximo_estado): ## permite adicionar transições para outros estados com base em um determinado caractere
         self.transicoes.append((caractere, proximo_estado))
 
     def __str__(self):
@@ -48,7 +56,7 @@ class Estado:
         return f"Nome: {self.nome}, {estado_final}, Transições: [{transicoes_str}]"
 
 
-def tabela():
+def tabela(): ## é uma função que cria e retorna uma tabela de transição para um autômato finito utilizado em análise léxica. Cada estado tem uma lista de transições representada como tuplas (caractere, próximo_estado).
     ascii_characters = "".join(chr(i) for i in range(32, 127))
     letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
     numeros = "0123456789"
@@ -103,7 +111,7 @@ def tabela():
                 ),
             ],
         ),
-        Estado(nome=5, final=True, look_forward=True, retorno=Token_type.ID),
+        Estado(nome=5, final=True, look_forward=True, retorno=Token_type.ID), ## estado para id e reservadas
         Estado(
             nome=6,
             transicoes=[
@@ -208,7 +216,7 @@ def tabela():
 
 
 def valida_tabela(tabela):
-    table = {}
+    table = {} ##Cria um dicionário onde as chaves são os nomes dos estados e os valores são as instâncias de Estado, se encontrar uma transição inválida, levanta uma exceção.
 
     for elem in tabela:
         table[elem.nome] = elem
