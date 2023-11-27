@@ -16,56 +16,58 @@ def lex(nome_arquivo):
     lexema = ""
     leitor = read(nome_arquivo)
 
-    inicio_lexema = (0, 0)
-    for char in leitor:
-        # print(f"LEU CHAR : {char}")
+    try:
+        inicio_lexema = (0, 0)
+        for char in leitor:
+            # print(f"LEU CHAR : {char}")
 
-        if len(lexema) == 0:
-            inicio_lexema = (char["line"], char["column"])
-
-        if table[estado].final:
-            if table[estado].look_forward:
-                yield (lexema[:-1], table[estado].retorno, inicio_lexema)
-                lexema = ""
-                estado = 0
-                inicio_lexema = (char["line"], char["column"])
-            else:
-                yield (lexema, table[estado].retorno, inicio_lexema)
-                lexema = ""
-                estado = 0
+            if len(lexema) == 0:
                 inicio_lexema = (char["line"], char["column"])
 
-        if not table[estado].final:
-            lexema, estado, found_transition = transiciona_estado(
-                table, char, estado, lexema
-            )
+            if table[estado].final:
+                if table[estado].look_forward:
+                    yield (lexema[:-1], table[estado].retorno, inicio_lexema)
+                    lexema = ""
+                    estado = 0
+                    inicio_lexema = (char["line"], char["column"])
+                else:
+                    yield (lexema, table[estado].retorno, inicio_lexema)
+                    lexema = ""
+                    estado = 0
+                    inicio_lexema = (char["line"], char["column"])
 
-        if not found_transition and not (table[estado].final):
-            estado = -1
-
-        if estado == -1:
-            print(
-                f'Erro no char {char} no lexema = "{lexema}" len = {len(lexema)}')
-            break
-
-        if table[estado].final:
-            if table[estado].look_forward:
-                yield (lexema[:-1], table[estado].retorno, inicio_lexema)
-                lexema = ""
-                estado = 0
-                inicio_lexema = (char["line"], char["column"])
+            if not table[estado].final:
                 lexema, estado, found_transition = transiciona_estado(
                     table, char, estado, lexema
                 )
-            else:
-                yield (lexema, table[estado].retorno, inicio_lexema)
-                lexema = ""
-                estado = 0
-                inicio_lexema = (char["line"], char["column"])
+
+            if not found_transition and not (table[estado].final):
+                estado = -1
+
+            if estado == -1:
+                print(
+                    f'Erro no char {char} no lexema = "{lexema}" len = {len(lexema)}')
+                raise Exception(
+                    f'Erro na linha {char["line"]+1}, coluna {char["column"]}')
+
+            if table[estado].final:
+                if table[estado].look_forward:
+                    yield (lexema[:-1], table[estado].retorno, inicio_lexema)
+                    lexema = ""
+                    estado = 0
+                    inicio_lexema = (char["line"], char["column"])
+                    lexema, estado, found_transition = transiciona_estado(
+                        table, char, estado, lexema
+                    )
+                else:
+                    yield (lexema, table[estado].retorno, inicio_lexema)
+                    lexema = ""
+                    estado = 0
+                    inicio_lexema = (char["line"], char["column"])
+    except Exception as e:
+        print(f'Exception: {e}')
 
 # Atualiza o estado com base na tabela de transição e retorna um tupla contendo o lexama atualizado, novo estado e um indicador de se foir encontrada a transicao
-
-
 def transiciona_estado(table, char, estado, lexema):
     lexema = lexema + char["char"]
     # print(f'Estado = {estado}, char = {char}, lexema = "{lexema}", len = {len(lexema)}')
@@ -112,7 +114,7 @@ def filtered_lex(nome_arquivo, tabela_simbolo):
 def insere_tabela(lexema, tabela: Tabela_simbolos, is_reserved):
     tipo = lexema[1]
     lex = lexema[0]
-    
+
     if is_reserved:
         tabela.inserir(token_tipo=tipo, lexema=lex, tipo_dado=tipo, valor=None)
 
